@@ -22,7 +22,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 05-Apr-2017 15:24:01
+% Last Modified by GUIDE v2.5 06-Apr-2017 12:13:31
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -73,62 +73,19 @@ function varargout = GUI_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
-% --- Executes on button press in radiobutton.
-function radiobutton_Callback(hObject, eventdata, handles)
-% hObject    handle to radiobutton (see GCBO)
+
+function initial_Callback(hObject, eventdata, handles)
+% hObject    handle to initial (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hint: get(hObject,'Value') returns toggle state of radiobutton
-
-
-% --- Executes on button press in PI.
-function PI_Callback(hObject, eventdata, handles)
-% hObject    handle to PI (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hint: get(hObject,'Value') returns toggle state of PI
-
-
-% --- Executes on button press in radiobutton3.
-function radiobutton3_Callback(hObject, eventdata, handles)
-% hObject    handle to radiobutton3 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hint: get(hObject,'Value') returns toggle state of radiobutton3
-
-
-% --- Executes on button press in PID.
-function PID_Callback(hObject, eventdata, handles)
-% hObject    handle to PID (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hint: get(hObject,'Value') returns toggle state of PID
-
-
-% --- Executes on button press in startStop.
-function startStop_Callback(hObject, eventdata, handles)
-% hObject    handle to startStop (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-set(handles.start, 'blooooo');
-
-
-function start_Callback(hObject, eventdata, handles)
-% hObject    handle to start (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of start as text
-%        str2double(get(hObject,'String')) returns contents of start as a double
+% Hints: get(hObject,'String') returns contents of initial as text
+%        str2double(get(hObject,'String')) returns contents of initial as a double
 
 
 % --- Executes during object creation, after setting all properties.
-function start_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to start (see GCBO)
+function initial_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to initial (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -162,22 +119,47 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- Executes on button press in step.
-function step_Callback(hObject, eventdata, handles)
-% hObject    handle to step (see GCBO)
+% --- Executes on button press in startEnd.
+function startEnd_Callback(hObject, eventdata, handles)
+% hObject    handle to startEnd (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
+global x_final;
+x_final = str2num(get(handles.final, 'String'));
+global x_initial;
+x_initial = str2num(get(handles.initial, 'String'));
 
-% --- Executes on button press in ramp.
-function ramp_Callback(hObject, eventdata, handles)
-% hObject    handle to ramp (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+global Ki Kd Kp;
 
-
-% --- Executes on button press in sawtooth.
-function sawtooth_Callback(hObject, eventdata, handles)
-% hObject    handle to sawtooth (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+controller = get(get(handles.selectController,'SelectedObject'), 'Tag');
+switch controller
+    case 'P'
+        Ki = 0;
+        Kd = 0;
+        Kp = 4.7743;
+        disp('Executing P Controller');
+        run('ball_and_beam');
+        return;
+    case 'PD'
+        Ki = 0;
+        Kd = 47.7391;
+        Kp = 4.1776;
+        disp('Executing PD Controller');
+        run('ball_and_beam');
+        return;
+    case 'PI'
+        Kd = 0;
+        Kp = 4.7735;
+        Ki = 0.0835;
+        disp('Executing PI Controller');
+        run('ball_and_beam');
+        return;
+    case 'PID'
+        Kd = 47.5938;
+        Ki = 2.9122;
+        Kp = 37.4463;
+        disp('Executing PID Controller');
+        run('ball_and_beam');
+        return;
+end

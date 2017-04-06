@@ -22,7 +22,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 04-Apr-2017 17:33:13
+% Last Modified by GUIDE v2.5 06-Apr-2017 11:45:02
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -73,13 +73,13 @@ function varargout = GUI_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
-% --- Executes on button press in radiobutton.
-function radiobutton_Callback(hObject, eventdata, handles)
-% hObject    handle to radiobutton (see GCBO)
+% --- Executes on button press in P.
+function P_Callback(hObject, eventdata, handles)
+% hObject    handle to P (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hint: get(hObject,'Value') returns toggle state of radiobutton
+% Hint: get(hObject,'Value') returns toggle state of P
 
 
 % --- Executes on button press in PI.
@@ -91,13 +91,13 @@ function PI_Callback(hObject, eventdata, handles)
 % Hint: get(hObject,'Value') returns toggle state of PI
 
 
-% --- Executes on button press in radiobutton3.
-function radiobutton3_Callback(hObject, eventdata, handles)
-% hObject    handle to radiobutton3 (see GCBO)
+% --- Executes on button press in PD.
+function PD_Callback(hObject, eventdata, handles)
+% hObject    handle to PD (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hint: get(hObject,'Value') returns toggle state of radiobutton3
+% Hint: get(hObject,'Value') returns toggle state of PD
 
 
 % --- Executes on button press in PID.
@@ -109,26 +109,43 @@ function PID_Callback(hObject, eventdata, handles)
 % Hint: get(hObject,'Value') returns toggle state of PID
 
 
-% --- Executes on button press in pushbutton1.
-function pushbutton1_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton1 (see GCBO)
+% --- Executes on button press in startStop.
+function startStop_Callback(hObject, eventdata, handles)
+% hObject    handle to startStop (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+x_initial = str2num(get(handles.start, 'String'));
+y_final = str2num(get(handles.finish, 'String'));
+controller = get(get(handles.selectController,'SelectedObject'), 'Tag');
+switch controller
+    case 'P'
+        disp('P');
+        sim('ball_and_beam.slx');
+        return;
+    case 'PI'
+        disp('PI');
+        return;
+    case 'PD'
+        disp('PD');
+        return;
+    case 'PID'
+        disp('PID');
+        return;
+end
+
+
+function start_Callback(hObject, eventdata, handles)
+% hObject    handle to start (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-
-
-function edit1_Callback(hObject, eventdata, handles)
-% hObject    handle to edit1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of edit1 as text
-%        str2double(get(hObject,'String')) returns contents of edit1 as a double
+% Hints: get(hObject,'String') returns contents of start as text
+%        str2double(get(hObject,'String')) returns contents of start as a double
 
 
 % --- Executes during object creation, after setting all properties.
-function edit1_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit1 (see GCBO)
+function start_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to start (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -140,18 +157,18 @@ end
 
 
 
-function fniish_Callback(hObject, eventdata, handles)
-% hObject    handle to fniish (see GCBO)
+function finish_Callback(hObject, eventdata, handles)
+% hObject    handle to finish (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'String') returns contents of fniish as text
-%        str2double(get(hObject,'String')) returns contents of fniish as a double
+% Hints: get(hObject,'String') returns contents of finish as text
+%        str2double(get(hObject,'String')) returns contents of finish as a double
 
 
 % --- Executes during object creation, after setting all properties.
-function fniish_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to fniish (see GCBO)
+function finish_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to finish (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -181,3 +198,10 @@ function sawtooth_Callback(hObject, eventdata, handles)
 % hObject    handle to sawtooth (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes during object creation, after setting all properties.
+function selectController_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to selectController (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
