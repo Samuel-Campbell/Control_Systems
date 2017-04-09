@@ -22,7 +22,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 06-Apr-2017 12:13:31
+% Last Modified by GUIDE v2.5 08-Apr-2017 21:59:12
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -82,7 +82,6 @@ function initial_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'String') returns contents of initial as text
 %        str2double(get(hObject,'String')) returns contents of initial as a double
 
-
 % --- Executes during object creation, after setting all properties.
 function initial_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to initial (see GCBO)
@@ -104,7 +103,10 @@ function final_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'String') returns contents of final as text
 %        str2double(get(hObject,'String')) returns contents of final as a double
-
+global x_final;
+x_final = str2num(get(handles.final, 'String'));
+disp(x_final);
+set_param('ball_and_beam', 'SimulationCommand', 'update')
 
 % --- Executes during object creation, after setting all properties.
 function final_CreateFcn(hObject, eventdata, handles)
@@ -163,3 +165,57 @@ switch controller
         run('ball_and_beam');
         return;
 end
+
+
+% --- Executes on button press in PD.
+function PD_Callback(hObject, eventdata, handles)
+% hObject    handle to PD (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of PD
+global Ki Kd Kp;
+Ki = 0;
+Kd = 47.7391;
+Kp = 4.1776;
+set_param('ball_and_beam', 'SimulationCommand', 'update');
+
+% --- Executes on button press in P.
+function P_Callback(hObject, eventdata, handles)
+% hObject    handle to P (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of P
+global Ki Kd Kp;
+Ki = 0;
+Kd = 0;
+Kp = 4.7743;
+set_param('ball_and_beam', 'SimulationCommand', 'update');
+
+
+% --- Executes on button press in PI.
+function PI_Callback(hObject, eventdata, handles)
+% hObject    handle to PI (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of PI
+global Ki Kd Kp;
+Kd = 0;
+Kp = 4.7735;
+Ki = 0.0835;
+set_param('ball_and_beam', 'SimulationCommand', 'update');
+
+% --- Executes on button press in PID.
+function PID_Callback(hObject, eventdata, handles)
+% hObject    handle to PID (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of PID
+global Ki Kd Kp;
+Kd = 47.5938;
+Kp = 37.4463;
+Ki = 47.5938;
+set_param('ball_and_beam', 'SimulationCommand', 'update');
